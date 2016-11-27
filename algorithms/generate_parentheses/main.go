@@ -19,33 +19,23 @@ package main
 import "github.com/kirk91/leetcode/assert"
 
 func generateParenthesis(n int) []string {
-	var result []string
-	gen([]byte{}, n, []byte{}, &result)
-	return result
+	var res []string
+	gen(n, n, make([]byte, 0, 2*n), &res)
+	return res
 }
 
-func gen(stack []byte, n int, chs []byte, result *[]string) {
-	if len(stack) > 0 || n > 0 {
-		if n == 0 {
-			for i := 0; i < len(stack); i++ {
-				chs = append(chs, ')')
-			}
-			stack = stack[:0]
-		} else {
-			if len(stack) == 0 {
-				gen(append(stack, '('), n-1, append(chs, '('), result)
-			} else {
-				gen(append(stack, '('), n-1, append(chs, '('), result)
-				gen(stack[:len(stack)-1], n, append(chs, ')'), result)
-			}
-		}
+func gen(left, right int, chs []byte, res *[]string) {
+	if left == 0 && right == 0 {
+		*res = append(*res, string(chs))
+		return
 	}
-
-	if len(stack) == 0 && n == 0 {
-		*result = append(*result, string(chs))
+	if left > 0 {
+		gen(left-1, right, append(chs, '('), res)
+	}
+	if right > left {
+		gen(left, right-1, append(chs, ')'), res)
 	}
 }
-
 func main() {
 	assert.MustEqual([]string{"((()))", "(()())", "(())()", "()(())", "()()()"}, generateParenthesis(3))
 }

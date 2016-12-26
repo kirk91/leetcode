@@ -14,6 +14,6 @@ func Equal(expected, actual interface{}) bool {
 
 func MustEqual(expected, actual interface{}) {
 	if !Equal(expected, actual) {
-		log.Fatalf("expected: %s, but received: %s", expected, actual)
+		log.Fatalf("expected: %v, but received: %v", expected, actual)
 	}
 }

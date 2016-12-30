@@ -4,6 +4,9 @@ import "github.com/kirk91/leetcode/assert"
 
 func findKth(a []int, b []int, k int) int {
 	m, n := len(a), len(b)
+	if m > n {
+		return findKth(b, a, k)
+	}
 	if k > (m + n) {
 		panic("index out of range")
 	}
@@ -41,4 +44,5 @@ func main() {
 	assert.MustEqual(4, findKth([]int{1, 3, 4}, []int{0, 2, 8, 9, 10}, 5))
 	assert.MustEqual(10, findKth([]int{1, 3, 4}, []int{0, 2, 8, 9, 10}, 8))
 	assert.MustEqual(11, findKth([]int{1, 3, 4, 11}, []int{0, 2, 8, 9, 10}, 9))
+	assert.MustEqual(3, findKth([]int{2, 3, 4}, []int{1}, 3))
 }
